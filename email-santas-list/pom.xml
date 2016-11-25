@@ -248,7 +248,17 @@
                 <groupId>io.fabric8</groupId>
                 <artifactId>fabric8-maven-plugin</artifactId>
                 <version>${fabric.version}</version>
+                  <executions>
+                    <execution>
+                         <id>attach</id>
+                         <phase>package</phase>
+                         <goals>
+                              <goal>attach</goal>
+                         </goals>
+                     </execution>
+                  </executions>
             </plugin>
+             
         </plugins>
     </build>
 
