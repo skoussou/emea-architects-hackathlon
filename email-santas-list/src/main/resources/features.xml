@@ -15,12 +15,12 @@
      implied.  See the License for the specific language governing
      permissions and limitations under the License.
 
--->
+
 <features name="quickstart-rest-${project.version}"
           xmlns="http://karaf.apache.org/xmlns/features/v1.0.0">
 
   <repository>mvn:org.apache.cxf.karaf/apache-cxf/${cxf-version}/xml/features</repository>
-  <repository>mvn:io.fabric8/fabric8-karaf/${project.version}/xml/features</repository>
+  <repository>mvn:io.fabric8/fabric8-karaf/1.1.0.CR1/xml/features</repository>
 
   <feature name="quickstart-rest" version="${project.version}" resolver="(obr)">
       <feature version="${project.version}">fabric-cxf</feature>
@@ -30,4 +30,30 @@
       <bundle>mvn:emea.summit.architects/rest/${project.version}</bundle>
   </feature>
 
+</features>
+-->
+<features name="swagger2" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+
+    <feature name="swagger2" version="${project.version}" description="swagger2 necessary bundkles">
+        <!-- swagger -->
+            <bundle start-level="10">mvn:javax.ws.rs/jsr311-api/1.1.1</bundle>
+            <bundle start-level="10">mvn:com.fasterxml.jackson.core/jackson-core/2.6.3</bundle>
+            <bundle start-level="10">mvn:com.fasterxml.jackson.core/jackson-databind/2.6.3</bundle>
+            <bundle start-level="10">mvn:com.fasterxml.jackson.core/jackson-annotations/2.6.3</bundle>
+            <bundle start-level="10">mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-xml/2.6.3</bundle>
+            <bundle start-level="10">mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-yaml/2.6.3</bundle>
+            <bundle start-level="10">mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/2.6.3</bundle>
+            <bundle start-level="10">mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/2.6.3</bundle>
+            <bundle start-level="10">mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/2.6.3</bundle>
+            <bundle start-level="10">mvn:org.javassist/javassist/3.20.0-GA</bundle>
+            <bundle start-level="10">mvn:javax.validation/validation-api/1.1.0.Final</bundle>
+            <bundle start-level="10">mvn:org.apache.commons/commons-lang3/3.4</bundle>
+            <bundle start-level="10">mvn:com.google.guava/guava/18.0</bundle>
+            <bundle start-level="10">mvn:io.swagger/swagger-core/1.5.4</bundle>
+            <bundle start-level="10">mvn:io.swagger/swagger-annotations/1.5.4</bundle>
+            <bundle start-level="10">mvn:io.swagger/swagger-models/1.5.4</bundle>
+            <bundle start-level="10">mvn:io.swagger/swagger-jaxrs/1.5.4</bundle>
+            <bundle start-level="10">mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.reflections/0.9.10_3</bundle>
+
+    </feature>
 </features>
