@@ -10,8 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.jboss.logging.Logger;
+import org.jboss.logging.Logger.Level;
+
+
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 public class Log4jTest extends HttpServlet {
 
@@ -23,7 +27,8 @@ public class Log4jTest extends HttpServlet {
     /**
      * Logger instance
      */
-    private Log log = LogFactory.getLog("test");
+//    private Log log = LogFactory.getLog("test");
+    private static final Logger LOG = Logger.getLogger(Log4jTest.class);
 
     /**
      * {@inheritDoc}
@@ -32,9 +37,12 @@ public class Log4jTest extends HttpServlet {
                     HttpServletRequest request,
                     HttpServletResponse response) throws ServletException,
                     IOException {
-        log.info("from log4j=== test log4j log");
-        log.debug("from log4j=== test log4j debug log");
-        log.error("from log4j=== test log4j error log");
+//        log.info("from log4j=== test log4j log");
+//        log.debug("from log4j=== test log4j debug log");
+//        log.error("from log4j=== test log4j error log");
+    	LOG.log(Level.INFO, "from log4j=== test log4j log");
+    	LOG.log(Level.DEBUG, "from log4j=== test log4j debug log");
+    	LOG.log(Level.ERROR, "from log4j=== test log4j error log");
 
         System.out
             .println("from system.out.println==== test system.out.println log");
@@ -50,10 +58,13 @@ public class Log4jTest extends HttpServlet {
             ar.add("1");
             ar.add("2");
 
-            log.info("from log4j=== get arraylist index=2" + ar.get(2));
+//            log.info("from log4j=== get arraylist index=2" + ar.get(2));
+        	LOG.log(Level.INFO, "from log4j=== get arraylist index=2" + ar.get(2));
+            
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
-            log.error("from log4j=== error===" + e.getMessage(), e);
+//            log.error("from log4j=== error===" + e.getMessage(), e);
+        	LOG.log(Level.INFO, "from log4j=== error===" + e.getMessage(), e);
             System.err.println("from system.err.println=== error==="
                 + e.getMessage());
         }
