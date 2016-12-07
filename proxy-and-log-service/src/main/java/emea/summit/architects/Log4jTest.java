@@ -49,19 +49,19 @@ public class Log4jTest extends HttpServlet {
         System.err
             .println("from system.err.println==== test system.error.println log");
         
-        System.out.println("=====================================================");
-        System.out.println("   REINDEERS FROM ENVIRONMENT PROPS from ConfigMap");
-        System.out.println("=====================================================");
-        System.out.print(System.getenv("team.a.reindeer.1")); System.out.println(" --> Blixem");
-        System.out.print(System.getenv("team.a.reindeer.2")); System.out.println(" --> Rudolph");
-        System.out.print(System.getenv("team.b.reindeer.3")); System.out.println(" --> Dancer");
-        System.out.print(System.getenv("team.b.reindeer.4")); System.out.println(" --> Cupid");
-        System.out.print(System.getenv("team.c.reindeer.5")); System.out.println(" --> Vixen");
-        System.out.print(System.getenv("team.c.reindeer.6")); System.out.println(" --> Comet");
-        System.out.print(System.getenv("team.d.reindeer.7")); System.out.println(" --> Dancer");
-        System.out.print(System.getenv("team.d.reindeer.8")); System.out.println(" --> Prancer");
-        System.out.print(System.getenv("team.z.reindeer.9")); System.out.println(" --> Dunder");
-        System.out.println("=====================================================");
+        LOG.log(Level.INFO,"=====================================================");
+        LOG.log(Level.INFO,"   REINDEERS FROM ENVIRONMENT PROPS from ConfigMap");
+        LOG.log(Level.INFO,"=====================================================");
+        LOG.log(Level.INFO,System.getenv("TEAM_A_REINDEER_1")+" --> Blixem");
+        LOG.log(Level.INFO,System.getenv("TEAM_A_REINDEER_2")+" --> Rudolph");
+        LOG.log(Level.INFO,System.getenv("TEAM_B_REINDEER_1")+" --> Dancer");
+        LOG.log(Level.INFO,System.getenv("TEAM_B_REINDEER_2")+" --> Cupid");
+        LOG.log(Level.INFO,System.getenv("TEAM_C_REINDEER_1")+" --> Vixen");
+        LOG.log(Level.INFO,System.getenv("TEAM_C_REINDEER_2")+" --> Comet");
+        LOG.log(Level.INFO,System.getenv("TEAM_D_REINDEER_1")+" --> Dancer");
+        LOG.log(Level.INFO,System.getenv("TEAM_D_REINDEER_2")+" --> Prancer");
+        LOG.log(Level.INFO,System.getenv("TEAM_Z_REINDEER_1")+" --> Dunder");
+        LOG.log(Level.INFO,"=====================================================");
 
         
 
