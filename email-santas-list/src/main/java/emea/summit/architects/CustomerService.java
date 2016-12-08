@@ -26,6 +26,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.wordnik.swagger.annotations.Api;
@@ -35,6 +36,7 @@ import com.wordnik.swagger.annotations.ApiResponses;
 import com.wordnik.swagger.annotations.ApiResponse;
 
 import org.apache.cxf.jaxrs.ext.MessageContext;
+import org.jboss.resteasy.client.ClientRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -83,6 +85,29 @@ public class CustomerService {
         LOG.info("Invoking getCustomer, Customer id is: {}", id);
         long idNumber = Long.parseLong(id);
         Customer c = customers.get(idNumber);
+        
+        
+        // TODO - Testing to call another service VIA SERVICE URL
+        try {
+        	ClientRequest request = new ClientRequest(
+                    "http://proxy-and-log-hackathlon-test-proxy-log.router.default.svc.cluster.local/proxy-and-log-service-1.0.0/Log4jTest")
+        			.accept(MediaType.APPLICATION_JSON);
+
+        } catch (Exception e) {
+            LOG.info("*****************getCustomer()***********************************************");
+            LOG.info("FAILED - EMAIL-SANTAS-LIST FAILED TO CALL - PROXY & LOGGING SERVICE");
+            LOG.info(e.getMessage());
+            LOG.info("****************************************************************");
+
+               
+        }
+        LOG.info("****************************************************************");
+        LOG.info("EMAIL-SANTAS-LIST SUCCESSFULLY CALLED - PROXY & LOGGING SERVICE");
+        LOG.info("****************************************************************");
+    	
+        
+        
+        
         return c;
     }
 
@@ -116,6 +141,25 @@ public class CustomerService {
         } else {
             r = Response.notModified().build();
         }
+        
+        // TODO - Testing to call another service VIA SERVICE URL
+        try {
+        	ClientRequest request = new ClientRequest(
+                    "http://proxy-and-log-hackathlon-test-proxy-log.router.default.svc.cluster.local/proxy-and-log-service-1.0.0/Log4jTest")
+        			.accept(MediaType.APPLICATION_JSON);
+
+        } catch (Exception e) {
+            LOG.info("*****************updateCustomer()***********************************************");
+            LOG.info("FAILED - EMAIL-SANTAS-LIST FAILED TO CALL - PROXY & LOGGING SERVICE");
+            LOG.info(e.getMessage());
+            LOG.info("****************************************************************");
+
+               
+        }
+        LOG.info("****************************************************************");
+        LOG.info("EMAIL-SANTAS-LIST SUCCESSFULLY CALLED - PROXY & LOGGING SERVICE");
+        LOG.info("****************************************************************");
+    	
 
         return r;
     }
@@ -143,6 +187,27 @@ public class CustomerService {
         LOG.info("Invoking addCustomer, Customer name is: {}", customer.getName());
         customer.setId(++currentId);
 
+        
+        // TODO - Testing to call another service VIA SERVICE URL
+        try {
+        	ClientRequest request = new ClientRequest(
+                    "http://proxy-and-log-hackathlon-test-proxy-log.router.default.svc.cluster.local/proxy-and-log-service-1.0.0/Log4jTest")
+        			.accept(MediaType.APPLICATION_JSON);
+
+        } catch (Exception e) {
+            LOG.info("*****************addCustomer()***********************************************");
+            LOG.info("FAILED - EMAIL-SANTAS-LIST FAILED TO CALL - PROXY & LOGGING SERVICE");
+            LOG.info(e.getMessage());
+            LOG.info("****************************************************************");
+
+               
+        }
+        LOG.info("****************************************************************");
+        LOG.info("EMAIL-SANTAS-LIST SUCCESSFULLY CALLED - PROXY & LOGGING SERVICE");
+        LOG.info("****************************************************************");
+    	
+        
+        
         customers.put(customer.getId(), customer);
         if (jaxrsContext.getHttpHeaders().getMediaType().getSubtype().equals("json")) {
             return Response.ok().type("application/json").entity(customer).build();
@@ -178,6 +243,26 @@ public class CustomerService {
             r = Response.notModified().build();
         }
 
+        
+        // TODO - Testing to call another service VIA SERVICE URL
+        try {
+        	ClientRequest request = new ClientRequest(
+                    "http://proxy-and-log-hackathlon-test-proxy-log.router.default.svc.cluster.local/proxy-and-log-service-1.0.0/Log4jTest")
+        			.accept(MediaType.APPLICATION_JSON);
+
+        } catch (Exception e) {
+            LOG.info("*****************deleteCustomer()***********************************************");
+            LOG.info("FAILED - EMAIL-SANTAS-LIST FAILED TO CALL - PROXY & LOGGING SERVICE");
+            LOG.info(e.getMessage());
+            LOG.info("****************************************************************");
+
+               
+        }
+        LOG.info("****************************************************************");
+        LOG.info("EMAIL-SANTAS-LIST SUCCESSFULLY CALLED - PROXY & LOGGING SERVICE");
+        LOG.info("****************************************************************");
+    	
+        
         return r;
     }
 
@@ -195,6 +280,36 @@ public class CustomerService {
         LOG.info("Invoking getOrder, Order id is: {}", orderId);
         long idNumber = Long.parseLong(orderId);
         Order c = orders.get(idNumber);
+        
+
+        Response r;
+        if (c != null) {
+            r = Response.ok().build();
+            customers.remove(idNumber);
+        } else {
+            r = Response.notModified().build();
+        }
+
+        
+        // TODO - Testing to call another service VIA SERVICE URL
+        try {
+        	ClientRequest request = new ClientRequest(
+                    "http://proxy-and-log-hackathlon-test-proxy-log.router.default.svc.cluster.local/proxy-and-log-service-1.0.0/Log4jTest")
+        			.accept(MediaType.APPLICATION_JSON);
+
+        } catch (Exception e) {
+            LOG.info("*****************getOrder()***********************************************");
+            LOG.info("FAILED - EMAIL-SANTAS-LIST FAILED TO CALL - PROXY & LOGGING SERVICE");
+            LOG.info(e.getMessage());
+            LOG.info("****************************************************************");
+
+               
+        }
+        LOG.info("****************************************************************");
+        LOG.info("EMAIL-SANTAS-LIST SUCCESSFULLY CALLED - PROXY & LOGGING SERVICE");
+        LOG.info("****************************************************************");
+    	
+        
         return c;
     }
 

@@ -44,7 +44,7 @@ import org.jboss.resteasy.client.ClientResponse;
 @Api(value = "/", description = "CXF CDI Quickstart")
 public class RootService {
 
-	Logger LOG = Logger.getLogger(RootService.class);
+	public static final Logger LOG = Logger.getLogger(RootService.class);
 	
 	
     @GET
@@ -59,27 +59,23 @@ public class RootService {
         }
         
         // TODO - Testing to call another service VIA SERVICE URL
-        
-
         try {
         	ClientRequest request = new ClientRequest(
                     "http://proxy-and-log-hackathlon-test-proxy-log.router.default.svc.cluster.local/proxy-and-log-service-1.0.0/Log4jTest")
         			.accept(MediaType.APPLICATION_JSON);
 
         } catch (Exception e) {
-            LOG.info("****************************************************************");
+            LOG.info("*****************index()***********************************************");
             LOG.info("FAILED - EMAIL-SANTAS-LIST FAILED TO CALL - PROXY & LOGGING SERVICE");
             LOG.info(e.getMessage());
             LOG.info("****************************************************************");
 
                
         }
-
         LOG.info("****************************************************************");
         LOG.info("EMAIL-SANTAS-LIST SUCCESSFULLY CALLED - PROXY & LOGGING SERVICE");
         LOG.info("****************************************************************");
-        	
-        
+
         return null;
     }
 
@@ -87,6 +83,26 @@ public class RootService {
     @Path("index.html")
     @Produces(MediaType.TEXT_HTML)
     public String indexHtml() throws IOException {
+        
+        // TODO - Testing to call another service VIA SERVICE URL
+        try {
+        	ClientRequest request = new ClientRequest(
+                    "http://proxy-and-log-hackathlon-test-proxy-log.router.default.svc.cluster.local/proxy-and-log-service-1.0.0/Log4jTest")
+        			.accept(MediaType.APPLICATION_JSON);
+
+        } catch (Exception e) {
+            LOG.info("*****************indexHtml()***********************************************");
+            LOG.info("FAILED - EMAIL-SANTAS-LIST FAILED TO CALL - PROXY & LOGGING SERVICE");
+            LOG.info(e.getMessage());
+            LOG.info("****************************************************************");
+
+               
+        }
+        LOG.info("****************************************************************");
+        LOG.info("EMAIL-SANTAS-LIST SUCCESSFULLY CALLED - PROXY & LOGGING SERVICE");
+        LOG.info("****************************************************************");
+    	
+    	
         return index();
     }
 
@@ -96,6 +112,27 @@ public class RootService {
     @GET
     @Path("_ping")
     public String ping() {
+        
+        // TODO - Testing to call another service VIA SERVICE URL
+        try {
+        	ClientRequest request = new ClientRequest(
+                    "http://proxy-and-log-hackathlon-test-proxy-log.router.default.svc.cluster.local/proxy-and-log-service-1.0.0/Log4jTest")
+        			.accept(MediaType.APPLICATION_JSON);
+
+        } catch (Exception e) {
+            LOG.info("*****************ping()***********************************************");
+            LOG.info("FAILED - EMAIL-SANTAS-LIST FAILED TO CALL - PROXY & LOGGING SERVICE");
+            LOG.info(e.getMessage());
+            LOG.info("****************************************************************");
+
+               
+        }
+        LOG.info("****************************************************************");
+        LOG.info("EMAIL-SANTAS-LIST SUCCESSFULLY CALLED - PROXY & LOGGING SERVICE");
+        LOG.info("****************************************************************");
+    	
+    	
+        
         return "true";
     }
 
