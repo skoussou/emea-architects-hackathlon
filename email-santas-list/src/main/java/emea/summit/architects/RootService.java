@@ -27,6 +27,11 @@ import javax.ws.rs.core.MediaType;
 import com.wordnik.swagger.annotations.Api;
 import io.fabric8.utils.IOHelpers;
 
+import org.jboss.logging.Logger;
+import org.jboss.resteasy.client.ClientRequest;
+import org.jboss.resteasy.client.ClientResponse;
+
+
 /**
  * This Java class with be hosted in the URI path defined by the @Path annotation. @Path annotations on the methods
  * of this class always refer to a path relative to the path defined at the class level.
@@ -39,6 +44,9 @@ import io.fabric8.utils.IOHelpers;
 @Api(value = "/", description = "CXF CDI Quickstart")
 public class RootService {
 
+	Logger LOG = Logger.getLogger(RootService.class);
+	
+	
     @GET
     @Produces(MediaType.TEXT_HTML)
     public String index() throws IOException {
@@ -49,6 +57,29 @@ public class RootService {
                 return IOHelpers.readFully(in);
             }
         }
+        
+        // TODO - Testing to call another service VIA SERVICE URL
+        
+
+        try {
+        	ClientRequest request = new ClientRequest(
+                    "http://proxy-and-log-hackathlon-test-proxy-log.router.default.svc.cluster.local/proxy-and-log-service-1.0.0/Log4jTest")
+        			.accept(MediaType.APPLICATION_JSON);
+
+        } catch (Exception e) {
+            LOG.info("****************************************************************");
+            LOG.info("FAILED - EMAIL-SANTAS-LIST FAILED TO CALL - PROXY & LOGGING SERVICE");
+            LOG.info(e.getMessage());
+            LOG.info("****************************************************************");
+
+               
+        }
+
+        LOG.info("****************************************************************");
+        LOG.info("EMAIL-SANTAS-LIST SUCCESSFULLY CALLED - PROXY & LOGGING SERVICE");
+        LOG.info("****************************************************************");
+        	
+        
         return null;
     }
 
