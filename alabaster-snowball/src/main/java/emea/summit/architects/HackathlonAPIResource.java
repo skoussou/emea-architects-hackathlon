@@ -178,6 +178,7 @@ public class HackathlonAPIResource {
 	public String test(TeamPayload request) {
 
 		System.out.println("Calling  ALABASTER-SNOWBALL-TST successfully");
+		System.out.println("REINDEER 1 [System.getenv(\"TEAM_E_REINDEER_1\")]: "+System.getenv("TEAM_E_REINDEER_1"));
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonInString = null;
 		try {

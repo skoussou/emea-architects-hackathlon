@@ -178,6 +178,8 @@ public class HackathlonAPIResource {
 	public String test(TeamPayload request) {
 
 		System.out.println("Calling  PEPPER-MINSTIX-TST successfully");
+		System.out.println("REINDEER 1 [System.getenv(\"TEAM_D_REINDEER_1\")]: "+System.getenv("TEAM_D_REINDEER_1"));
+		System.out.println("REINDEER 2 [System.getenv(\"TEAM_D_REINDEER_2\")]: "+System.getenv("TEAM_D_REINDEER_2"));		
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonInString = null;
 		try {
