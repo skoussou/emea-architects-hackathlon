@@ -178,7 +178,22 @@ public class HackathlonAPIResource {
 	public String test(TeamPayload request) {
 
 		System.out.println("Calling  BUSHY-EVERGREEN-TST successfully");
-		System.out.println("Content -->"+request);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonInString = null;
+		try {
+			//Convert object to JSON string
+			jsonInString = mapper.writeValueAsString(request);
+
+			//Convert object to JSON string and pretty print
+			jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(request);
+			System.out.println("JSON REQUEST "+jsonInString);
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Failed to transform to JSON "+e.getMessage();
+		}
+		System.out.println("Content -->"+jsonInString);
 		return "Calling  BUSHY-EVERGREEN-TST successfully";
 	}
 
