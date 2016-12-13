@@ -177,8 +177,8 @@ public class HackathlonAPIResource {
 	@ApiOperation("Sends the email to a list of participants, with subject and payload")
 	public String test() {
 
-		System.out.println("Calling  ALABASTER-SNOWBALL-TST successfully");
-		return "Calling  ALABASTER-SNOWBALL-TST successfully";
+		System.out.println("Calling  BUSHY-EVERGREEN-TST successfully");
+		return "Calling  BUSHY-EVERGREEN-TST successfully";
 	}
 
 //	@POST  
