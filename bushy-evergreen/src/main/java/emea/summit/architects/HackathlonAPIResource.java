@@ -186,8 +186,6 @@ public class HackathlonAPIResource {
 
 			//Convert object to JSON string and pretty print
 			jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(request);
-			System.out.println("JSON REQUEST "+jsonInString);
-
 
 		} catch (Exception e) {
 			e.printStackTrace();

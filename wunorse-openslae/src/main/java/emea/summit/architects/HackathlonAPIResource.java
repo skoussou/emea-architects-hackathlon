@@ -174,13 +174,26 @@ public class HackathlonAPIResource {
 	@POST  
 	@Path("/test")
 	@Consumes("application/json")
-	@ApiOperation("Sends the email to a list of participants, with subject and payload")
-	public String test() {
+	@ApiOperation("Tests printing the forwarded payload - Normally it would sort it and pass it on")
+	public String test(TeamPayload request) {
 
 		System.out.println("Calling  WUNORSE-OPENSLAE-TST successfully");
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonInString = null;
+		try {
+			//Convert object to JSON string
+			jsonInString = mapper.writeValueAsString(request);
+
+			//Convert object to JSON string and pretty print
+			jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(request);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Failed to transform to JSON "+e.getMessage();
+		}
+		System.out.println("Content -->"+jsonInString);
 		return "Calling  WUNORSE-OPENSLAE-TST successfully";
 	}
-
 //	@POST  
 //	@Path("/service/proxy")
 //	@Consumes("application/json")
