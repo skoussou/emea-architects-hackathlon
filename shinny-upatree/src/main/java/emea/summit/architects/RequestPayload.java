@@ -18,6 +18,17 @@ public class RequestPayload {
 		
 	}
 	
+	
+	
+	public RequestPayload(String teamName, String reindeerName, HashMap<String, String> nameEmaiMap) {
+		super();
+		this.teamName = teamName;
+		this.reindeerName = reindeerName;
+		this.nameEmaiMap = nameEmaiMap;
+	}
+
+
+
 	public String getTeamName() {
 		return teamName;
 	}

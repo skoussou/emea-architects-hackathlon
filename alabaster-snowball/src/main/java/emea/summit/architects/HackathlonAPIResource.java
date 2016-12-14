@@ -172,13 +172,22 @@ public class HackathlonAPIResource {
 	
 	
 	@POST  
-	@Path("/test")
+	@Path("/reindeerservice")
 	@Consumes("application/json")
-	@ApiOperation("Tests printing the forwarded payload - Normally it would sort it and pass it on")
+	@ApiOperation("alabaster-snowball, Tests printing the forwarded payload - Normally it would sort it and pass it on")
 	public String test(TeamPayload request) {
 
 		System.out.println("Calling  ALABASTER-SNOWBALL-TST successfully");
+		System.out.println("Received Content -->"+request);
+
 		System.out.println("REINDEER 1 [System.getenv(\"TEAM_E_REINDEER_1\")]: "+System.getenv("TEAM_E_REINDEER_1"));
+		
+		HashMap<String, String> emailMap = new HashMap<String, String>(){{put("wunorse-openslae-Helper1", "as1@santavillage.com");}};
+		RequestPayload newPayload1 = new RequestPayload("santas-helpers-e-team", System.getenv("TEAM_E_REINDEER_1"), emailMap);
+		request.getPayload().add(newPayload1);
+		
+		request.setServiceName("alabaster-snowball");
+
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonInString = null;
 		try {
@@ -192,7 +201,10 @@ public class HackathlonAPIResource {
 			e.printStackTrace();
 			return "Failed to transform to JSON "+e.getMessage();
 		}
-		System.out.println("Content -->"+jsonInString);
+		System.out.println("Sending Content -->"+jsonInString);
+		
+		httpCall("POST", "http://proxy-api-test-milan.router.default.svc.cluster.local/api/service/proxy", jsonInString);
+				
 		return "Calling  ALABASTER-SNOWBALL-TST successfully";
 	}
 
