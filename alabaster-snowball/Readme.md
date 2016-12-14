@@ -55,4 +55,4 @@ Alternative
 6. Add route
 7. Don't forget to add to /etc/hosts against infra IP if needed to call from browser or external to OCP if your OCP cluster doesn't resolve via DNS the route
 
-s
+as
