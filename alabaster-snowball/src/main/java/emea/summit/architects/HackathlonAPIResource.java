@@ -180,6 +180,10 @@ public class HackathlonAPIResource {
 		System.out.println("Calling  ALABASTER-SNOWBALL-TST successfully");
 		System.out.println("Received Content -->"+request);
 
+		if (request.getPayload() == null){
+			request.setPayload(new ArrayList<RequestPayload>());
+		}
+		
 		System.out.println("REINDEER 1 [System.getenv(\"TEAM_E_REINDEER_1\")]: "+System.getenv("TEAM_E_REINDEER_1"));
 		
 		HashMap<String, String> emailMap = new HashMap<String, String>(){{put("wunorse-openslae-Helper1", "as1@santavillage.com");}};
@@ -188,19 +192,34 @@ public class HackathlonAPIResource {
 		
 		request.setServiceName("alabaster-snowball");
 
+//		ObjectMapper mapper = new ObjectMapper();
+//		String jsonInString = null;
+//		try {
+//			//Convert object to JSON string
+//			jsonInString = mapper.writeValueAsString(request);
+//
+//			//Convert object to JSON string and pretty print
+//			jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(request);
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return "Failed to transform to JSON "+e.getMessage();
+//		}
+		
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonInString = null;
 		try {
 			//Convert object to JSON string
-			jsonInString = mapper.writeValueAsString(request);
+			jsonInString = mapper.writeValueAsString(request.getPayload());
 
 			//Convert object to JSON string and pretty print
-			jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(request);
+			jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(request.getPayload());
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "Failed to transform to JSON "+e.getMessage();
 		}
+		
 		System.out.println("Sending Content -->"+jsonInString);
 		
 //		httpCall("POST", "http://proxy-api-test-milan.router.default.svc.cluster.local/api/service/proxy", jsonInString);
