@@ -151,15 +151,6 @@ public class HackathlonAPIResource {
 	
 	private static Map<String, String> serviceENVVariableMap = new HashMap<String, String>(){{
 		put("proxy-api", "PROXY_API");
-//		put("santas-helpers-b-team", "shinny-upatree");
-//		put("santas-helpers-c-team", "wunorse-openslae");
-//		put("santas-helpers-d-team", "pepper-minstix");
-//		put("santas-helpers-e-team", "alabaster-snowball");
-//		put("bushy-evergreen", "BUSHY_EVERGREEN");
-//		put("shinny-upatree", "SHINY_UPATREE");
-//		put("wunorse-openslae", "WUNORSE_OPENSLAE");
-//		put("pepper-minstix", "PEPPER_MINSTIX");
-//		put("alabaster-snowball", "ALABASTER_SNOWBALL");
 	}};
 	
 	private static Map<String, String> servicesRouteMap = new HashMap<String, String>(){{
@@ -225,8 +216,8 @@ public class HackathlonAPIResource {
 		
 		System.out.println("Sending Content -->"+jsonInString);
 		
-		String host = System.getenv(serviceENVVariableMap.get(request.getServiceName())+"_SERVICE_HOST");
-		String port = System.getenv(serviceENVVariableMap.get(request.getServiceName())+"_SERVICE_PORT");
+		String host = System.getenv(serviceENVVariableMap.get("proxy-api")+"_SERVICE_HOST");
+		String port = System.getenv(serviceENVVariableMap.get("proxy-api")+"_SERVICE_PORT");
 		
 		
 		System.out.println("ALABASTER-SNOWBAL calling at http://"+host+":"+port+"/api/service/proxy");
