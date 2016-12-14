@@ -203,87 +203,11 @@ public class HackathlonAPIResource {
 		}
 		System.out.println("Sending Content -->"+jsonInString);
 		
-		httpCall("POST", "http://proxy-api-test-milan.router.default.svc.cluster.local/api/service/proxy", jsonInString);
+//		httpCall("POST", "http://proxy-api-test-milan.router.default.svc.cluster.local/api/service/proxy", jsonInString);
+		httpCall("POST", " http://proxy-api-santas-helpers-e-team.35.156.180.17.xip.io/api/service/validate", jsonInString);
 				
 		return "Calling  ALABASTER-SNOWBALL-TST successfully";
 	}
-
-//	@POST  
-//	@Path("/service/proxy")
-//	@Consumes("application/json")
-//	@ApiOperation("Receives request, validates request so far, identifies next service to contact, contacts the service OR if no more sends the email to SANTA")
-//	public String submit(TeamPayload request) {
-//		boolean PROD_ENV = System.getenv("ENVIRONMENT") != null &&  System.getenv("ENVIRONMENT").equalsIgnoreCase("PROD")? true : false;
-//		
-////		IClient ocpClient = createOCPClient();
-//		
-////		System.out.println("<------------------ ROUTE DETAILS ------------------>");
-////		System.out.println(ocpClient.get(ResourceKind.ROUTE, namespaceFromService(request.getServiceName())));
-////		System.out.println("<--------------------------------------------------->");
-////		ModelNode node = ModelNode.fromJSONString(Samples.V1_ROUTE_WO_TLS.getContentAsString());
-////        Route route = new Route(node, ocpClient, ResourcePropertiesRegistry.getInstance().get("v1", ResourceKind.ROUTE));
-////		ocpClient.getResourceURI(arg0)
-//		
-//		System.out.println("==================REQUEST SERVICE: "+request.getServiceName()+"=======================");
-//		System.out.println("PAYLOAD");
-//		System.out.println(request.getPayload().toString());
-//		
-//		String host = System.getenv(serviceENVVariableMap.get(request.getServiceName())+"_SERVICE_HOST");
-//		String port = System.getenv(serviceENVVariableMap.get(request.getServiceName())+"_SERVICE_PORT");
-//		
-//		System.out.println("Would call \n POST   https://"+host+":"+port);
-//
-//		if (PROD_ENV) {
-//			if (validate(request.getPayload()).equalsIgnoreCase(VALID_RESPONSE)){
-//				System.out.println("Valid...sending to next service");
-//				// TODO 
-//				// find the next service and send OR send email to SANTA
-//				
-////				"oc describe route "+request.getServiceName()
-////				"oc describe route bushy-evergreen"
-////				"oc describe route shinny-upatree"
-////				"oc describe route wunorse-openslae"
-////				"oc describe route pepper-minstix"
-////				"oc describe route alabaster-snowball"
-//				
-////				String host = System.getenv(serviceENVVariableMap.get(request.getServiceName())+"_SERVICE_HOST");
-////				String port = System.getenv(serviceENVVariableMap.get(request.getServiceName())+"_SERVICE_PORT");
-//				
-//				System.out.println("ABOUT To call\n POST   https://"+host+":"+port);
-//				System.out.println(request.toString());
-//				//httpCall("POST", "https://"+host+":"+port, request.toString());
-//				
-//			} else {
-//				// Send a failed response to the requestors and an email.
-//				System.out.println("INVALID_RESPONSE");
-//				System.out.println("Sent to team "+namespaceFromService(request.getServiceName())+" emailing "+emailsOfTeam(request));
-//				
-//
-//				
-//				try {
-//					JavaMailService.generateAndSendEmail(INVALID_RESPONSE+"\n\n"+request.getPayload(), "HACKATHLON Santa Helper "+request.getServiceName()+" sent INVALID Request ", emailsOfTeam(request));
-//				} catch (MessagingException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//					return "Email Failed due to "+e.getMessage();
-//				}
-//			}
-//		}
-//		
-//		
-////		try {
-////		JavaMailService.generateAndSendEmail(email.getContent().toString(), email.getSubject(), email.getEmailAddresses());
-////	} catch (MessagingException e) {
-////		// TODO Auto-generated catch block
-////		e.printStackTrace();
-////		return "Email Failed due to "+e.getMessage();
-////	}
-//		
-//		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-//
-//		
-//		return "Email was submitted successfully";
-//	}
 
 	
 	private String httpCall(String httpMethod, String serviceURL, String data){
