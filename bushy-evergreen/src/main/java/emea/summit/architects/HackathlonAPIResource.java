@@ -183,6 +183,10 @@ public class HackathlonAPIResource {
 		System.out.println("REINDEER 1 [System.getenv(\"TEAM_A_REINDEER_1\")]: "+System.getenv("TEAM_A_REINDEER_1"));
 		System.out.println("REINDEER 2 [System.getenv(\"TEAM_A_REINDEER_2\")]: "+System.getenv("TEAM_A_REINDEER_2"));
 		
+		if (request.getPayload() == null){
+			request.setPayload(new ArrayList<RequestPayload>());
+		}
+		
 		HashMap<String, String> emailMap = new HashMap<String, String>(){{put("bushy-evergreen-Helper1", "beh1@santavillage.com");}};
 		RequestPayload newPayload1 = new RequestPayload("santas-helpers-a-team", System.getenv("TEAM_A_REINDEER_1"), emailMap);
 		request.getPayload().add(newPayload1);
