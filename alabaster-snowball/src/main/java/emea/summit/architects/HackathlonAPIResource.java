@@ -89,7 +89,7 @@ import io.undertow.client.ClientRequest;
  * @author stelios@redhat.com
  *
  */
-//@Path("/")
+@Path("/")
 public class HackathlonAPIResource {
 
 	
