@@ -128,69 +128,37 @@ public class HackathlonAPIResource {
 	private static final int ZERO = 0;
 	private static final String VALID_RESPONSE = "The service is valid and Reindeers in order";
 	private static final String INVALID_RESPONSE = "The service is invalid and Reindeers are out of order \n ";
-
-	private static LinkedList<String> serviceRoutes = new LinkedList<String>(Arrays.asList("http://santas-helpers-a-team.router.default.svc.cluster.local",
-			"http://santas-helpers-b-team.router.default.svc.cluster.local",
-			"http://santas-helpers-c-team.router.default.svc.cluster.local",
-			"http://santas-helpers-d-team.router.default.svc.cluster.local",
-			"http://santas-helpers-e-team.router.default.svc.cluster.local",
-			"http://swarm-email-santas-list.router.default.svc.cluster.local"));
-	
-	private static Map<String, String> namespacesServicesMap = new HashMap<String, String>(){{
-//		put("santas-helpers-a-team", "bushy-evergreen");
-//		put("santas-helpers-b-team", "shinny-upatree");
-//		put("santas-helpers-c-team", "wunorse-openslae");
-//		put("santas-helpers-d-team", "pepper-minstix");
-//		put("santas-helpers-e-team", "alabaster-snowball");
-		put("santas-helpers-a-team", "test-milan");
-		put("santas-helpers-b-team", "test-milan");
-		put("santas-helpers-c-team", "test-milan");
-		put("santas-helpers-d-team", "test-milan");
-		put("santas-helpers-e-team", "test-milan");
-	}};
 	
 	private static Map<String, String> serviceENVVariableMap = new HashMap<String, String>(){{
 		put("proxy-api", "PROXY_API");
-//		put("santas-helpers-b-team", "shinny-upatree");
-//		put("santas-helpers-c-team", "wunorse-openslae");
-//		put("santas-helpers-d-team", "pepper-minstix");
-//		put("santas-helpers-e-team", "alabaster-snowball");
-//		put("bushy-evergreen", "BUSHY_EVERGREEN");
-//		put("shinny-upatree", "SHINY_UPATREE");
-//		put("wunorse-openslae", "WUNORSE_OPENSLAE");
-//		put("pepper-minstix", "PEPPER_MINSTIX");
-//		put("alabaster-snowball", "ALABASTER_SNOWBALL");
 	}};
-	
-	private static Map<String, String> servicesRouteMap = new HashMap<String, String>(){{
-		put("bushy-evergreen", "http://bushy-evergreen-santas-helpers-a-team.router.default.svc.cluster.local");
-		put("shinny-upatree", "http://shinny-upatree-santas-helpers-b-team.router.default.svc.cluster.local");
-		put("wunorse-openslae", "http://santas-helpers-c-team.router.default.svc.cluster.local");
-		put("pepper-minstix", "http://santas-helpers-e-team.router.default.svc.cluster.local");
-		put("alabaster-snowball", "http://santas-helpers-e-team.router.default.svc.cluster.local");
-	}};
-	
 	
 	@POST  
 	@Path("/reindeerservice")
 	@Consumes("application/json")
-	@ApiOperation(", wunorse-openslaeTests printing the forwarded payload - Normally it would sort it and pass it on")
+	@ApiOperation(" bushy-evergreen, Tests printing the forwarded payload - Normally it would sort it and pass it on")
 	public String test(TeamPayload request) {
 
-		System.out.println("Calling  WUNORSE-OPENSLAE-TST successfully");
+		System.out.println("Calling   bushy-evergreen successfully");
 		System.out.println("Received Content -->"+request);
 
+		if (request.getPayload() == null){
+			request.setPayload(new ArrayList<RequestPayload>());
+		}
+		
 		System.out.println("REINDEER 1 [System.getenv(\"TEAM_C_REINDEER_1\")]: "+System.getenv("TEAM_C_REINDEER_1"));
-		System.out.println("REINDEER 2 [System.getenv(\"TEAM_C_REINDEER_2\")]: "+System.getenv("TEAM_C_REINDEER_2"));		
-		
-		HashMap<String, String> emailMap = new HashMap<String, String>(){{put("wunorse-openslae-Helper1", "wo1@santavillage.com");}};
+		System.out.println("REINDEER 1 [System.getenv(\"TEAM_C_REINDEER_2\")]: "+System.getenv("TEAM_C_REINDEER_2"));
+
+		HashMap<String, String> emailMap = new HashMap<String, String>(){{put("Marcel Wysocki", "mwysocki@redhat.com");}};
 		RequestPayload newPayload1 = new RequestPayload("santas-helpers-c-team", System.getenv("TEAM_C_REINDEER_1"), emailMap);
-		request.getPayload().add(newPayload1);
-		
 		RequestPayload newPayload2 = new RequestPayload("santas-helpers-c-team", System.getenv("TEAM_C_REINDEER_2"), emailMap);
+		request.getPayload().add(newPayload1);
 		request.getPayload().add(newPayload2);
+
+		// Order
+		Collections.sort(request.getPayload(), new RequestPayloadComparator());
 		
-		request.setServiceName("wunorse-openslae");
+		request.setServiceName("bushy-evergreen");
 
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonInString = null;
@@ -205,89 +173,18 @@ public class HackathlonAPIResource {
 			e.printStackTrace();
 			return "Failed to transform to JSON "+e.getMessage();
 		}
+		
 		System.out.println("Sending Content -->"+jsonInString);
 		
-		httpCall("POST", "http://proxy-api-test-milan.router.default.svc.cluster.local/api/service/proxy", jsonInString);
-				
-		return "Calling  WUNORSE-OPENSLAE-TST successfully";
-	}
-//	@POST  
-//	@Path("/service/proxy")
-//	@Consumes("application/json")
-//	@ApiOperation("Receives request, validates request so far, identifies next service to contact, contacts the service OR if no more sends the email to SANTA")
-//	public String submit(TeamPayload request) {
-//		boolean PROD_ENV = System.getenv("ENVIRONMENT") != null &&  System.getenv("ENVIRONMENT").equalsIgnoreCase("PROD")? true : false;
-//		
-////		IClient ocpClient = createOCPClient();
-//		
-////		System.out.println("<------------------ ROUTE DETAILS ------------------>");
-////		System.out.println(ocpClient.get(ResourceKind.ROUTE, namespaceFromService(request.getServiceName())));
-////		System.out.println("<--------------------------------------------------->");
-////		ModelNode node = ModelNode.fromJSONString(Samples.V1_ROUTE_WO_TLS.getContentAsString());
-////        Route route = new Route(node, ocpClient, ResourcePropertiesRegistry.getInstance().get("v1", ResourceKind.ROUTE));
-////		ocpClient.getResourceURI(arg0)
-//		
-//		System.out.println("==================REQUEST SERVICE: "+request.getServiceName()+"=======================");
-//		System.out.println("PAYLOAD");
-//		System.out.println(request.getPayload().toString());
-//		
-//		String host = System.getenv(serviceENVVariableMap.get(request.getServiceName())+"_SERVICE_HOST");
-//		String port = System.getenv(serviceENVVariableMap.get(request.getServiceName())+"_SERVICE_PORT");
-//		
-//		System.out.println("Would call \n POST   https://"+host+":"+port);
-//
-//		if (PROD_ENV) {
-//			if (validate(request.getPayload()).equalsIgnoreCase(VALID_RESPONSE)){
-//				System.out.println("Valid...sending to next service");
-//				// TODO 
-//				// find the next service and send OR send email to SANTA
-//				
-////				"oc describe route "+request.getServiceName()
-////				"oc describe route bushy-evergreen"
-////				"oc describe route shinny-upatree"
-////				"oc describe route wunorse-openslae"
-////				"oc describe route pepper-minstix"
-////				"oc describe route alabaster-snowball"
-//				
-////				String host = System.getenv(serviceENVVariableMap.get(request.getServiceName())+"_SERVICE_HOST");
-////				String port = System.getenv(serviceENVVariableMap.get(request.getServiceName())+"_SERVICE_PORT");
-//				
-//				System.out.println("ABOUT To call\n POST   https://"+host+":"+port);
-//				System.out.println(request.toString());
-//				//httpCall("POST", "https://"+host+":"+port, request.toString());
-//				
-//			} else {
-//				// Send a failed response to the requestors and an email.
-//				System.out.println("INVALID_RESPONSE");
-//				System.out.println("Sent to team "+namespaceFromService(request.getServiceName())+" emailing "+emailsOfTeam(request));
-//				
-//
-//				
-//				try {
-//					JavaMailService.generateAndSendEmail(INVALID_RESPONSE+"\n\n"+request.getPayload(), "HACKATHLON Santa Helper "+request.getServiceName()+" sent INVALID Request ", emailsOfTeam(request));
-//				} catch (MessagingException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//					return "Email Failed due to "+e.getMessage();
-//				}
-//			}
-//		}
-//		
-//		
-////		try {
-////		JavaMailService.generateAndSendEmail(email.getContent().toString(), email.getSubject(), email.getEmailAddresses());
-////	} catch (MessagingException e) {
-////		// TODO Auto-generated catch block
-////		e.printStackTrace();
-////		return "Email Failed due to "+e.getMessage();
-////	}
-//		
-//		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-//
-//		
-//		return "Email was submitted successfully";
-//	}
+		String host = System.getenv(serviceENVVariableMap.get("proxy-api")+"_SERVICE_HOST");
+		String port = System.getenv(serviceENVVariableMap.get("proxy-api")+"_SERVICE_PORT");
+		
+		
+		System.out.println("ALABASTER-SNOWBAL calling at http://"+host+":"+port+"/api/service/proxy");
+		httpCall("POST", "http://"+host+":"+port+"/api/service/proxy", jsonInString);
 
+		return "Calling bushy-evergreen successfully";
+	}
 	
 	private String httpCall(String httpMethod, String serviceURL, String data){
 		String result = "Not valid request for \n"+

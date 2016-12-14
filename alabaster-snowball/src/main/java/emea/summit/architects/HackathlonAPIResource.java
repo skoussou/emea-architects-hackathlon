@@ -129,36 +129,8 @@ public class HackathlonAPIResource {
 	private static final String VALID_RESPONSE = "The service is valid and Reindeers in order";
 	private static final String INVALID_RESPONSE = "The service is invalid and Reindeers are out of order \n ";
 
-	private static LinkedList<String> serviceRoutes = new LinkedList<String>(Arrays.asList("http://santas-helpers-a-team.router.default.svc.cluster.local",
-			"http://santas-helpers-b-team.router.default.svc.cluster.local",
-			"http://santas-helpers-c-team.router.default.svc.cluster.local",
-			"http://santas-helpers-d-team.router.default.svc.cluster.local",
-			"http://santas-helpers-e-team.router.default.svc.cluster.local",
-			"http://swarm-email-santas-list.router.default.svc.cluster.local"));
-	
-	private static Map<String, String> namespacesServicesMap = new HashMap<String, String>(){{
-//		put("santas-helpers-a-team", "bushy-evergreen");
-//		put("santas-helpers-b-team", "shinny-upatree");
-//		put("santas-helpers-c-team", "wunorse-openslae");
-//		put("santas-helpers-d-team", "pepper-minstix");
-//		put("santas-helpers-e-team", "alabaster-snowball");
-		put("santas-helpers-a-team", "test-milan");
-		put("santas-helpers-b-team", "test-milan");
-		put("santas-helpers-c-team", "test-milan");
-		put("santas-helpers-d-team", "test-milan");
-		put("santas-helpers-e-team", "test-milan");
-	}};
-	
 	private static Map<String, String> serviceENVVariableMap = new HashMap<String, String>(){{
 		put("proxy-api", "PROXY_API");
-	}};
-	
-	private static Map<String, String> servicesRouteMap = new HashMap<String, String>(){{
-		put("bushy-evergreen", "http://bushy-evergreen-santas-helpers-a-team.router.default.svc.cluster.local");
-		put("shinny-upatree", "http://shinny-upatree-santas-helpers-b-team.router.default.svc.cluster.local");
-		put("wunorse-openslae", "http://santas-helpers-c-team.router.default.svc.cluster.local");
-		put("pepper-minstix", "http://santas-helpers-e-team.router.default.svc.cluster.local");
-		put("alabaster-snowball", "http://santas-helpers-e-team.router.default.svc.cluster.local");
 	}};
 	
 	
@@ -177,7 +149,6 @@ public class HackathlonAPIResource {
 		
 		System.out.println("REINDEER 1 [System.getenv(\"TEAM_E_REINDEER_1\")]: "+System.getenv("TEAM_E_REINDEER_1"));
 		
-//		HashMap<String, String> emailMap = new HashMap<String, String>(){{put("wunorse-openslae-Helper1", "as1@santavillage.com");}};
 		HashMap<String, String> emailMap = new HashMap<String, String>(){{put("Stelios Kousouris", "stelios@redhat.com");put("Andread Tarocchi", "atarocch@redhat.com");}};
 		RequestPayload newPayload1 = new RequestPayload("santas-helpers-e-team", System.getenv("TEAM_E_REINDEER_1"), emailMap);
 		request.getPayload().add(newPayload1);
@@ -201,20 +172,6 @@ public class HackathlonAPIResource {
 			return "Failed to transform to JSON "+e.getMessage();
 		}
 		
-//		ObjectMapper mapper = new ObjectMapper();
-//		String jsonInString = null;
-//		try {
-//			//Convert object to JSON string
-//			jsonInString = mapper.writeValueAsString(request.getPayload());
-//
-//			//Convert object to JSON string and pretty print
-//			jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(request.getPayload());
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return "Failed to transform to JSON "+e.getMessage();
-//		}
-		
 		System.out.println("Sending Content -->"+jsonInString);
 		
 		String host = System.getenv(serviceENVVariableMap.get("proxy-api")+"_SERVICE_HOST");
@@ -227,22 +184,6 @@ public class HackathlonAPIResource {
 		//		httpCall("POST", "http://proxy-api-santas-helpers-e-team.35.156.180.17.xip.io/api/service/validate", jsonInString);
 				
 		return "Calling  ALABASTER-SNOWBALL-TST successfully";
-	}
-
-	private boolean orderPayload(Iterator<RequestPayload> reindeersIt, String reindeer) {
-		String nextReindeer = null;
-		if (reindeersIt == null || !reindeersIt.hasNext()){
-			return true;
-		}
-		if (reindeersIt.hasNext()){
-			nextReindeer = reindeersIt.next().getReindeerName();
-			System.out.println(" Compare "+reindeer+" vs "+nextReindeer);
-			if (reindeer != null && reindeer.compareToIgnoreCase(nextReindeer) > ZERO) {
-				return false;
-			}
-			return inOrder(reindeersIt, nextReindeer);
-		}
-		return true;
 	}
 	
 	private String httpCall(String httpMethod, String serviceURL, String data){
