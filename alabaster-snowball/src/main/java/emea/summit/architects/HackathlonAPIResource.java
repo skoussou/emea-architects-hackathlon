@@ -223,7 +223,7 @@ public class HackathlonAPIResource {
 		System.out.println("Sending Content -->"+jsonInString);
 		
 //		httpCall("POST", "http://proxy-api-test-milan.router.default.svc.cluster.local/api/service/proxy", jsonInString);
-		httpCall("POST", " http://proxy-api-santas-helpers-e-team.35.156.180.17.xip.io/api/service/validate", jsonInString);
+		httpCall("POST", "http://proxy-api-santas-helpers-e-team.35.156.180.17.xip.io/api/service/validate", jsonInString);
 				
 		return "Calling  ALABASTER-SNOWBALL-TST successfully";
 	}
