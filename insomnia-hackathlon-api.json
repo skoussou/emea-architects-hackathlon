@@ -1,0 +1,301 @@
+{
+  "_type": "export",
+  "__export_format": 1,
+  "__export_date": "2016-12-15T09:38:31.129Z",
+  "__export_source": "insomnia.chrome.app:v2.7.0",
+  "items": [
+    {
+      "_type": "request_group",
+      "_id": "grp_1481212960111",
+      "name": "HACKATHLON-API",
+      "environments": {},
+      "requests": [
+        {
+          "_type": "request",
+          "_id": "req_1481270172258",
+          "url": "http://swarm-email-santa-swarm-email-santas-list.router.default.svc.cluster.local/api/email-santa/MerryXMASSanta",
+          "method": "PUT",
+          "body": "{}",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "text",
+            "panel_width": 0.5
+          },
+          "name": "Helper-API-SendMail"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1481270354697",
+          "url": "http://helper-api-hackathlon.router.default.svc.cluster.local/api/hackathlon/next-service",
+          "method": "POST",
+          "body": "http://santas-helpers-a-team.router.default.svc.cluster.local",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "Helper-API-GetNextService"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1481289780554",
+          "url": "http://helper-api-hackathlon.router.default.svc.cluster.local/api/hackathlon/other-service/",
+          "method": "POST",
+          "body": "{\"httpMethod\":\"POST\",\n\"url\":\"http://helper-api-hackathlon.router.default.svc.cluster.local/api/hackathlon/next-service\",\n\"content\":\"http://santas-helpers-a-team.router.default.svc.cluster.local\"\n}",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "Helper-API-CallAnotherService"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1481294663637",
+          "url": "http://proxy-api-santas-helpers-d-team.35.156.180.17.xip.io/api/info",
+          "method": "GET",
+          "body": "{}",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "Helper-API-Info"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1481295977793",
+          "url": "http://helper-api-hackathlon.router.default.svc.cluster.local/api/hackathlon/service/validate",
+          "method": "POST",
+          "body": "[{\"teamName\":\"Team_A\",\"reindeerName\":\"blixen\",\"nameEmaiMap\":{\"Andrea Tarrochi\":\"atarocch@redhat.com\",\"Stelios Kousouris\":\"stelios@redhat.com\"}},{\"teamName\":\"Team_B\",\"reindeerName\":\"dancer\",\"nameEmaiMap\":{\"Matteo Renzi\":\"mrenzi@redhat.com\",\"Antonis Tsipras\":\"atsipras@redhat.com\"}}]",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "Helper-API-Validate"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1481330042141",
+          "url": "http://helper-api-hackathlon.router.default.svc.cluster.local/api/hackathlon/email-santa",
+          "method": "POST",
+          "body": "[{\"teamName\":\"Team_A\",\"reindeerName\":\"Rudolph\",\"nameEmaiMap\":{\"Andrea Tarrochi\":\"atarocch@redhat.com\",\"Stelios Kousouris\":\"stelios@redhat.com\"}},{\"teamName\":\"Team_B\",\"reindeerName\":\"dancer\",\"nameEmaiMap\":{\"Matteo Renzi\":\"mrenzi@redhat.com\",\"Antonis Tsipras\":\"atsipras@redhat.com\"}}]",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "Helper-API-SendMail-RequestPayload"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1481561886683",
+          "url": "http://proxy-api-test-milan.router.default.svc.cluster.local/api/service/email-santa ",
+          "method": "POST",
+          "body": "{\"content\":[{\"teamName\":\"Team_A\",\"reindeerName\":\"blixen\",\"nameEmaiMap\":{\"Andrea Tarrochi\":\"atarocch@redhat.com\",\"Stelios Kousouris\":\"stelios@redhat.com\"}},{\"teamName\":\"Team_B\",\"reindeerName\":\"dancer\",\"nameEmaiMap\":{\"Matteo Renzi\":\"mrenzi@redhat.com\",\"Antonis Tsipras\":\"atsipras@redhat.com\"}}],\n\"subject\":\"BAD EMAIL\",\n\"emailAddresses\":[\"stelioskoussouris@hotmail.com\", \"koussouris.stelios@gmail.com\"]}",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "Helper-API-SendEmail-POST"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1481566099812",
+          "url": "http://localhost:8080/api/service/email-santa",
+          "method": "POST",
+          "body": "{\"content\":[{\"teamName\":\"Team_A\",\"reindeerName\":\"blixen\",\"nameEmaiMap\":{\"Andrea Tarrochi\":\"atarocch@redhat.com\",\"Stelios Kousouris\":\"stelios@redhat.com\"}},{\"teamName\":\"Team_B\",\"reindeerName\":\"dancer\",\"nameEmaiMap\":{\"Matteo Renzi\":\"mrenzi@redhat.com\",\"Antonis Tsipras\":\"atsipras@redhat.com\"}}],\n\"subject\":\"BAD EMAIL\",\n\"emailAddresses\":[\"stelioskoussouris@hotmail.com\", \"koussouris.stelios@gmail.com\"]}",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "Local-MSA-SendEmail-POST"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1481649831749",
+          "url": "http://localhost:8080/api/service/proxy",
+          "method": "POST",
+          "body": "{\"serviceName\":\"NONE\",\n    \"payload\":[{\"teamName\":\"santas-helpers-c-team\",\"reindeerName\":\"blixen\",\"nameEmaiMap\":{\"Andrea Tarrochi\":\"atarocch@redhat.com\",\"Stelios Kousouris\":\"stelios@redhat.com\"}},{\"teamName\":\"santas-helpers-a-team\",\"reindeerName\":\"dancer\",\"nameEmaiMap\":{\"Matteo Renzi\":\"mrenzi@redhat.com\",\"Antonis Tsipras\":\"atsipras@redhat.com\"}}]}",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "Local-API-Service-Proxy"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1481623397959",
+          "url": "http://proxy-api-test-milan.router.default.svc.cluster.local/api/service/proxy",
+          "method": "POST",
+          "body": "{\"serviceName\":\"pepper-minstix\",\n    \"payload\":[{\"teamName\":\"santas-helpers-c-team\",\"reindeerName\":\"womet\",\"nameEmaiMap\":{\"Andrea Tarrochi\":\"atarocch@redhat.com\",\"Stelios Kousouris\":\"stelios@redhat.com\"}},{\"teamName\":\"santas-helpers-a-team\",\"reindeerName\":\"dancer\",\"nameEmaiMap\":{\"Matteo Renzi\":\"mrenzi@redhat.com\",\"Antonis Tsipras\":\"atsipras@redhat.com\"}}]}",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "Helper-API-Service-Proxy"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1481728541262",
+          "url": "http://alabaster-snowball-preprod.35.156.180.17.xip.io/reindeerservice",
+          "method": "POST",
+          "body": "{\n   \"serviceName\":\"pepper-minstix\",\n   \"payload\":[\n      {\n         \"teamName\":\"santas-helpers-d-team\",\n         \"reindeerName\":\"Prancer\",\n         \"nameEmaiMap\":{\n            \"Michael Thirion\":\"mthirion@redhat.com\"\t\n         }\n      },\n      {\n         \"teamName\":\"santas-helpers-d-team\",\n         \"reindeerName\":\"Dunder\",\n         \"nameEmaiMap\":{\n            \"Michael Thirion\":\"mthirion@redhat.com\"\t\n         }\n      },\n      {\n         \"teamName\":\"santas-helpers-c-team\",\n         \"reindeerName\":\"Comet\",\n         \"nameEmaiMap\":{\n            \"Marcel Wysocki\":\"mwysocki@redhat.com\"\n         }\n      },\n      {\n         \"teamName\":\"santas-helpers-c-team\",\n         \"reindeerName\":\"Dancer\",\n         \"nameEmaiMap\":{\n            \"Marcel Wysocki\":\"mwysocki@redhat.com\"\n         }\n      },\n      {\n         \"teamName\":\"santas-helpers-a-team\",\n         \"reindeerName\":\"Dasher\",\n         \"nameEmaiMap\":{\n            \"David Sancho\":\"dsanchor@redhat.com\"\n         }\n      },\n      {\n         \"teamName\":\"santas-helpers-a-team\",\n         \"reindeerName\":\"Blitzen\",\n         \"nameEmaiMap\":{\n            \"David Sancho\":\"dsanchor@redhat.com\"\n         }\n      },\n      {\n         \"teamName\":\"santas-helpers-b-team\",\n         \"reindeerName\":\"Cupid\",\n         \"nameEmaiMap\":{\n            \"Tom Llewelyn\":\"tllewely@redhat.com\",\t\n            \"Stuart Winchester\":\"swinches@redhat.com\"\t\n         }\n      },\n      {\n         \"teamName\":\"santas-helpers-b-team\",\n         \"reindeerName\":\"Cupid\",\n         \"nameEmaiMap\":{\n            \"Tom Llewelyn\":\"tllewely@redhat.com\",\t\n            \"Stuart Winchester\":\"swinches@redhat.com\"\t\n         }\n      }\n   ]\n}",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "Helper-API-Service-Proxy-PREPROD-reindeerservice"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1481729474927",
+          "url": "http://proxy-api-preprod.35.156.180.17.xip.io/api/service/proxy",
+          "method": "POST",
+          "body": "{\"serviceName\":\"NONE\"}",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "Helper-API-Service-Proxy-PREPROD"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1481664016726",
+          "url": " http://bushy-evergreen-test-milan.router.default.svc.cluster.local/api/test",
+          "method": "POST",
+          "body": "{\"serviceName\":\"NONE\",\n    \"payload\":[{\"teamName\":\"santas-helpers-c-team\",\"reindeerName\":\"dunder\",\"nameEmaiMap\":{\"Andrea Tarrochi\":\"atarocch@redhat.com\",\"Stelios Kousouris\":\"stelios@redhat.com\"}},{\"teamName\":\"santas-helpers-a-team\",\"reindeerName\":\"dancer\",\"nameEmaiMap\":{\"Matteo Renzi\":\"mrenzi@redhat.com\",\"Antonis Tsipras\":\"atsipras@redhat.com\"}}]}",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "Helper-API-busgy-evergreen-test"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1481706244492",
+          "url": "http://proxy-api-santas-helpers-c-team.35.156.180.17.xip.io/api/service/proxy",
+          "method": "POST",
+          "body": "{\"serviceName\":\"NONE\",\n    \"payload\":[{\"teamName\":\"santas-helpers-c-team\",\"reindeerName\":\"comet\",\"nameEmaiMap\":{\"Andrea Tarrochi\":\"atarocch@redhat.com\",\"Stelios Kousouris\":\"stelios@redhat.com\"}},{\"teamName\":\"santas-helpers-a-team\",\"reindeerName\":\"dancer\",\"nameEmaiMap\":{\"Matteo Renzi\":\"mrenzi@redhat.com\",\"Antonis Tsipras\":\"atsipras@redhat.com\"}}]}",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "TEAM-ALL-Helper-API-Service-Proxy"
+        },
+        {
+          "_type": "request",
+          "_id": "req_1481713346892",
+          "url": "http://wunorse-openslae.35.156.180.17.nip.io/reindeerservice",
+          "method": "POST",
+          "body": "{\"serviceName\":\"pepper-minstix\",\n    \"payload\":[{\"teamName\":\"santas-helpers-c-team\",\"reindeerName\":\"womet\",\"nameEmaiMap\":{\"Andrea Tarrochi\":\"atarocch@redhat.com\",\"Stelios Kousouris\":\"stelios@redhat.com\"}},{\"teamName\":\"santas-helpers-a-team\",\"reindeerName\":\"dancer\",\"nameEmaiMap\":{\"Matteo Renzi\":\"mrenzi@redhat.com\",\"Antonis Tsipras\":\"atsipras@redhat.com\"}}]}",
+          "headers": [],
+          "params": [],
+          "authentication": {
+            "_type": "basic",
+            "username": "",
+            "password": ""
+          },
+          "__insomnia": {
+            "format": "json",
+            "panel_width": 0.5
+          },
+          "name": "TEAM-E-Helper-API-Service-Proxy"
+        }
+      ]
+    }
+  ]
+}
