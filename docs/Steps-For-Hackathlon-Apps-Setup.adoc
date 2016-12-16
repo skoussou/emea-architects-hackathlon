@@ -1,0 +1,273 @@
+---For Organizers ----------------------------------------------------------------------------
+1. Create Namespaces
+	- santas-helpers-a-team
+	- santas-helpers-b-team
+	- santas-helpers-c-team
+	- santas-helpers-d-team
+	- santas-helpers-e-team
+
+2. Create as admin the users in each namespace
+- santas-helpers-a-team
+	- dsanchor
+	- psforza
+
+- santas-helpers-b-team
+	- swinches
+	- tllewely
+
+- santas-helpers-c-team
+	- mwysocki
+	- agallego
+
+- santas-helpers-d-team
+	- okimchi
+	- mthirion
+
+- santas-helpers-e-team
+	- atarocch
+	- stelios	
+
+3. CONFIG MAP for DEV Per Team
+
+In PRE-PROD & PROD
+-------------------------------------------------
+oc create configmap santas-config \   
+     --from-literal=team.a.reindeer.1=Blitzen \
+     --from-literal=team.a.reindeer.2=Dasher \
+     --from-literal=team.b.reindeer.1=Cupid \
+     --from-literal=team.b.reindeer.2=Vixen \
+     --from-literal=team.c.reindeer.1=Comet \
+     --from-literal=team.c.reindeer.2=Dancer \
+     --from-literal=team.d.reindeer.1=Prancer \
+     --from-literal=team.d.reindeer.2=Dunder \
+     --from-literal=team.e.reindeer.1=Rudolph \
+     --from-literal=environment=PROD
+
+oc create configmap santas-config \   
+     --from-literal=team.a.reindeer.1=Rudolph \
+     --from-literal=team.a.reindeer.2=Dunder \
+     --from-literal=team.b.reindeer.1=Cupid \
+     --from-literal=team.b.reindeer.2=Vixen \
+     --from-literal=team.c.reindeer.1=Blitzen \
+     --from-literal=team.c.reindeer.2=Dasher \
+     --from-literal=team.d.reindeer.1=Prancer \
+     --from-literal=team.d.reindeer.2=Dancer \
+     --from-literal=team.e.reindeer.1=Comet \
+     --from-literal=environment=PROD
+
+
+Provide ConfigMap per TEAM for DEV Testing
+-------------------------------------------------
+NameSpace: santas-helpers-a-team
+-----
+oc create configmap santas-config \   
+     --from-literal=team.a.reindeer.1=Vixen \
+     --from-literal=team.a.reindeer.2=Prancer \
+     --from-literal=environment=DEV
+
+NameSpace: santas-helpers-b-team
+-----
+oc create configmap santas-config \   
+     --from-literal=team.b.reindeer.1=Vixen \
+     --from-literal=team.b.reindeer.2=Prancer \
+     --from-literal=environment=DEV
+
+NameSpace: santas-helpers-c-team
+-----
+oc create configmap santas-config \   
+     --from-literal=team.c.reindeer.1=Vixen \
+     --from-literal=team.c.reindeer.2=Prancer \
+     --from-literal=environment=DEV
+
+NameSpace: santas-helpers-d-team
+-----
+oc create configmap santas-config \   
+     --from-literal=team.d.reindeer.1=Vixen \
+     --from-literal=team.d.reindeer.2=Prancer \
+     --from-literal=environment=DEV
+
+NameSpace: santas-helpers-e-team
+-----
+oc create configmap santas-config \   
+     --from-literal=team.e.reindeer.1=Vixen \
+     --from-literal=environment=DEV
+
+eg. of adding on buildConfig ENV variables utilizing the configMap
+
+        env:
+          - name: TEAM_A_REINDEER_1
+            valueFrom:
+              configMapKeyRef:
+                name: santas-config
+                key: team.a.reindeer.1
+          - name: TEAM_A_REINDEER_2
+            valueFrom:
+              configMapKeyRef:
+                name: santas-config
+                key: team.a.reindeer.2
+
+        env:
+          - name: TEAM_B_REINDEER_1
+            valueFrom:
+              configMapKeyRef:
+                name: santas-config
+                key: team.b.reindeer.1
+          - name: TEAM_B_REINDEER_2
+            valueFrom:
+              configMapKeyRef:
+                name: santas-config
+                key: team.b.reindeer.2
+
+
+        env:
+          - name: TEAM_C_REINDEER_1
+            valueFrom:
+              configMapKeyRef:
+                name: santas-config
+                key: team.c.reindeer.1
+          - name: TEAM_C_REINDEER_2
+            valueFrom:
+              configMapKeyRef:
+                name: santas-config
+                key: team.c.reindeer.2
+
+        env:
+          - name: TEAM_D_REINDEER_1
+            valueFrom:
+              configMapKeyRef:
+                name: santas-config
+                key: team.d.reindeer.1
+          - name: TEAM_D_REINDEER_2
+            valueFrom:
+              configMapKeyRef:
+                name: santas-config
+                key: team.d.reindeer.2
+
+        env:
+          - name: TEAM_E_REINDEER_1
+            valueFrom:
+              configMapKeyRef:
+                name: santas-config
+                key: team.e.reindeer.1
+
+        env:
+          - name: ENVIRONMENT
+            valueFrom:
+              configMapKeyRef:
+                name: santas-config
+                key: environment
+
+Deploy Helper Proxy Service
+-------------------------------------------------
+
+Step 1: Add WildflySwarm Template
+---------------------------------
+Login as admin user on OCP (cannot be done as normal non-admin user) 	: oc login https://35.156.133.70:8443
+Go to project openshift							: oc project openshift
+Add the widflyswarm template						: oc create -f https://raw.githubusercontent.com/wildfly-swarm/sti-wildflyswarm/master/1.0/wildflyswarm-sti-all.json
+Check progress								: oc logs bc/wildflyswarm-10-centos7-build -f
+Should be in the templates (if not in cli it is in console)		: oc get templates -n openshift
+
+Step 2: Create a Helper Service
+---------------------------------
+1. Go to Project/Namespace where this will be used (ie. one for each Team?). I will try a new namespace to be shared by all teams and see (project/namespace in our cluster only possible to create from console)
+2. Create new img		oc new-app --name helper-api wildflyswarm-10-centos7~https://github.com/skoussou/hackathlon-helper-api
+3. Check progress with: 	oc status & oc logs -f bc/helper-api
+4. if things go wrong you probably have to delete the following (check if they exist)
+ - oc delete imagestream helper-api
+ - oc delete buildconfig helper-api
+ - oc delete deploymentconfigs helper-api
+ - oc delete deploymentconfig helper-api
+ - oc delete service helper-api
+ - and redo the above
+5. Add route (cli or console, not confident yet so doing via console)
+6. Don't forget to add to /etc/hosts against infra IP if needed to call from browser or external to OCP
+
+Step 3: Adding Test Services or Real ones as DNS is not setup on AWS (due to restarts of machines this is futile as IPs change)
+---------------------------------
+Option 1.	 set the route name against the infra IP
+
+eg. 35.156.180.17  email-santas-list-hackathlon-test.router.default.svc.cluster.local proxy-and-log-hackathlon-test-proxy-log.router.default.svc.cluster.local swarm-email-santa-swarm-email-santas-list.router.default.svc.cluster.local/
+
+Option 2. 
+- When DNS isnt working you can use appname.35.156.180.17.xip.io or .nip.io in your route name.
+- You can also set that as default subdomain in the master-config.yaml
+eg. (go to project and Add to project via YAML/JSON)
+apiVersion: v1
+kind: Route
+metadata:
+  name: proxy-api
+  namespace: santas-helpers-e-team
+  selfLink: /oapi/v1/namespaces/santas-helpers-e-team/routes/proxy-api
+  uid: 84e4e82f-c1d9-11e6-9faa-024fcfbc69e5
+  labels:
+    app: proxy-api
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+    openshift.io/host.generated: 'true'
+spec:
+  host: proxy-api-santas-helpers-e-team.35.156.180.17.xip.io
+  to:
+    kind: Service
+    name: proxy-api
+    weight: 100
+  port:
+    targetPort: 8080-tcp
+
+---For Participants ----------------------------------------------------------------------------
+Refer to Hackathlon Teams&Comms Page [1] on how to communicate during the hackathlon
+	
+
+Aim:
+Scenario: 	  You are santas helping teams with one aim to get his reindeers in alphabetical order in order for Santa to deliver the Christmas Presents.
+Hackathlon Goal:  Lets learn the quirks of bringing an MSA into OCP, read environemnt configurations, communicate with other MSAs and use promotion pipelines
+Technical Goal:   Write an MSA which will consist of the following aspects
+	    		- API (specific)
+	    		- ENVIRONMENT VARS read from a configMap to define the names of reindeers
+			- Sort the list of existing (if any) reindeers and yours associated with the names/emails of your team, and the namespace of your Service
+		        - Discover and call the PROXY & LOG service
+	  
+
+		  Bring your App ON OCP Approach Options (you choose the method and the technology ... just justify choice of techs/method in the presentation)
+		   - Pre-built container
+		   - S2I with existing Template
+		   - Bring your own template
+
+		  examples: 
+                    [1] https://developers.redhat.com/blog/2016/06/29/four-different-approaches-to-run-wildfly-swarm-in-openshift/
+		    [2] https://access.redhat.com/documentation/en/red-hat-xpaas/0/single/red-hat-xpaas-fuse-integration-services-image/#fuse-create-an-application-from-the-maven-archetype-catalog
+
+		  Pipeline: Write a test to be used in the Jenkins pipeline and hook your namespace to the exsting
+	  	  	Promote to PRE-PROD, PROD namespaces (one for everyone) via the Pipeline ??? Andrea to advise here (also what it means with regards to git webhooks??)
+
+		  Make Santa Happy as email will be sent and if all reindeers are in alphabetical order he can start the delivery of the XMas presents.
+
+		Requirements: service name should be exposed on ROUTE SERVICE-NAME-NAMESPACE as it appears on the Hackathlong Teams&Comms Page [1] and context PATH should be "/" 
+
+Presentation Goal: 10 mins per team MAX. 
+			Did you succeed
+			If not why
+			What did you do
+			What would you do differently given the chance again
+			What did you learn
+			Feedback for the organizers
+
+[1] https://docs.google.com/spreadsheets/d/1992Hygg9oUAeevFcgx4pG_4z0mA_jxZMg46m4ovqroc/edit#gid=0
+[2] https://developers.redhat.com/blog/2016/06/29/four-different-approaches-to-run-wildfly-swarm-in-openshift/
+[3] https://access.redhat.com/documentation/en/red-hat-xpaas/0/single/red-hat-xpaas-fuse-integration-services-image/#fuse-create-an-application-from-the-maven-archetype-catalog
+
+
+
+Setup Environment
+---------------------------
+They need oc tools (>= v.1.3)
+Give them namespaces
+Give them logins
+Give them infra IP
+Ask them to add as root in /etc/hosts
+INFRA-IP "Their Service Route" for testing (give us the route also and service API exposed as well for hardcoded routing?)
+github/gitlab to share between team members
+
+
+
+

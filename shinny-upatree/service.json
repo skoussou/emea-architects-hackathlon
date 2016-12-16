@@ -1,0 +1,30 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "shinny-upatree",
+        "namespace": "santas-helpers-b-team",
+        "labels": {
+            "app": "santas-reindeer"
+        },
+        "annotations": {
+            "openshift.io/generated-by": "OpenShiftNewApp"
+        }
+    },
+    "spec": {
+        "ports": [
+            {
+                "name": "8080-tcp",
+                "protocol": "TCP",
+                "port": 8080,
+                "targetPort": 8080
+            }
+        ],
+        "selector": {
+            "app": "santas-reindeer",
+            "deploymentconfig": "santas-reindeer"
+        },
+        "type": "ClusterIP",
+        "sessionAffinity": "None"
+    }
+}

@@ -1,3 +1,6 @@
+Not part of hackathlon Apps
+
+
 # CDI CXF QuickStart
 
 This quick start demonstrates how to create a RESTful (JAX-RS) web service using Apache CXF and expose it using CDI running in a Java standalone container.

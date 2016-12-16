@@ -1,0 +1,215 @@
+= Cluster installation in AWS
+Felix Meulenkamp <fmeulenk@redhat.com>
+v0.2, 2016-11-25
+
+== Resources
+
+Install ansible 2.2 and dependencies on your mashine.
+
+[source,shell]
+----
+sudo dnf install -y ansible python-boto pyOpenSSL
+----
+
+Clone the openshift-ansible GIT-repository.
+
+[source,shell]
+----
+git clone https://github.com/openshift/openshift-ansible.git
+cd openshift-ansible
+----
+
+The actual Install Guide:
+https://github.com/openshift/openshift-ansible/blob/master/README_AWS.md
+
+== Security groups
+
+In AMAZON AWS you have to change the _default_ Security group to allow all incomming traffic.
+Or just allow what is stated in the manual.
+
+== Config AWS
+
+Go to AWS --> Your Security Credentials and use the Access ID/KEy of a service User (I had stelaws downloaded locally when started with AWS)
+
+# go to somewhere in your drive and create credentials (no need to be the one below)
+.~/.aws/credentials
+[source,ini]
+----
+[default]
+aws_access_key_id=AKIXXXXXXX
+aws_secret_access_key=XXXXXXXXX
+----
+
+Note: you have to make sure that your ssh keys will allow you to access an AWS Instance and the same key/pair is provided below in  ec2_keypair or else the installation will fail
+
+== Config for the script
+# create if not already in /openshift-ansible
+
+cluster.conf
+[source,shell]
+----
+# We use Frankfurt
+export ec2_region='eu-central-1'
+export ec2_vpc_subnet='subnet-32838f5b'			CHANGE: This is the subnet-32e52348 in my AWS Account available
+# in vpc-78f8da11
+# This will be unique to your AWS acount
+
+# This RHEL based AMI works for Frankfurt
+export ec2_image='ami-875042eb'
+export ec2_instance_type='m4.large'
+
+# This SSH key has to exist in your AWS Account
+export ec2_keypair='ansible'				CHANGE: Imported id_rsa into AWS and also replaced here "id_rsa" for ansible. OLD FAILED: MyEC2Key (change to what I have in my account as KEYPAIR ... from /sw10/AWS/AWS-Keyes and also copy MyEC2Key.pem to ~/.ssh/
+
+export ec2_security_groups="['default']"
+
+# Your RHN Account
+export rhel_subscription_user='XXXX@redhat.com'
+export rhel_subscription_pass='XXXX'
+export rhel_subscription_pool='Red Hat OpenShift Container Platform'
+----
+
+Source the config
+Run the installation:
+
+[source,shell]
+----
+source cluster.conf
+source ../credentials
+bin/cluster create aws -t openshift-enterprise loveandpeace
+----
+
+== Post Installation
+
+Of course you have to substitute the IP _35.156.126.162_ with your actual
+master's IP and _35.156.110.82_ with your infra node's IP.
+
+Log in to the master server using ssh `ssh -i 'ssh-key' ec2-user@35.156.126.162`.
+
+Add SSH-Keys for other users to access the AMI Instances
+
+.~/.ssh/authorized_keys
+----
+REMOVED 
+----
+
+Create users for OCP
+
+[source,shell]
+----
+yum install httpd-tools
+
+htpasswd -cBb /etc/origin/htpasswd admin admin123
+htpasswd -Bb /etc/origin/htpasswd atarocch atarocch123
+htpasswd -Bb /etc/origin/htpasswd stelios stelios123
+htpasswd -Bb /etc/origin/htpasswd lix lix123
+----
+
+That produces:
+
+./etc/origin/htpasswd
+----
+admin:$2y$05$dGj80Qbg7llqePI56XlO6egXceDaPytKsSj3iEjbC3n9beNQLwwRy
+atarocch:$2y$05$P5KL6cpFAPZx0ajmSB6fPexnMeQcyjLpshXEPU/bJokc0sbnrTOfi
+stelios:$2y$05$WXl/PB7ifDdrgQVrFmhoXuxgohzrLv.Lmgk7GZQPAQtRihndnt/5a
+lix:$2y$05$OFjiTNI7Z.8OHQ6EFQuCLuTpROB7SxX4FJVJ1NzAV8hebYkopIkgG
+----
+
+Edit Master Config and switch from the DenyAll Provider to the HTPasswd
+Provider:
+
+.vi /etc/origin/master/master-config.yaml
+[source,yaml]
+----
+oauthConfig:
+  ...
+  identityProviders:
+    - name: my_htpasswd_provider
+      challenge: true
+      login: true
+      mappingMethod: claim
+      provider:
+        apiVersion: v1
+        kind: HTPasswdPasswordIdentityProvider
+        file: /etc/origin/htpasswd
+----
+
+Restart services:
+
+[source,shell]
+----
+systemctl restart httpd				(This might fail no problem the next one matters)
+systemctl restart atomic-openshift-master
+----
+
+Add _cluster-admin_ permissions to user _admin_:
+
+[source,shell]
+----
+oc login -u system:admin
+
+oadm policy add-cluster-role-to-user cluster-admin admin
+----
+
+== Reach the cluster
+
+You can connect to the OpenShift Console using the master's IP:
+
+https://35.156.126.162:8443/console/
+
+You can open the Registry as well if you map the hostname to the router in your
+_/etc/hosts_
+
+./etc/hosts
+----
+35.156.110.82 registry-console-default.router.default.svc.cluster.local
+----
+
+And open this URL in your browser:
+https://registry-console-default.router.default.svc.cluster.local/
+
+
+== Open Tasks
+
+* AWS Accounts
+* Personal Logins
+* Accounts for every team
+* Tighten Security on security group
+
+
+ok: [localhost] => {
+    "msg": {
+        "hackathlonplace": {
+            "master": {
+                "default": [
+                    {
+                        "name": "hackathlonplace-master-0c5ca", 
+                        "private IP": "172.31.20.125", 
+                        "public IP": "35.156.235.156"
+                    }
+                ]
+            }, 
+            "node": {
+                "compute": [
+                    {
+                        "name": "hackathlonplace-node-compute-b867d", 
+                        "private IP": "172.31.23.32", 
+                        "public IP": "35.156.234.78"
+                    }, 
+                    {
+                        "name": "hackathlonplace-node-compute-0e6bf", 
+                        "private IP": "172.31.23.33", 
+                        "public IP": "35.156.213.29"
+                    }
+                ], 
+                "infra": [
+                    {
+                        "name": "hackathlonplace-node-infra-c7221", 
+                        "private IP": "172.31.28.106", 
+                        "public IP": "35.156.207.211"
+                    }
+                ]
+            }
+        }
+    }
+}
