@@ -64,7 +64,7 @@ oc create configmap santas-config \
 ----
 
 ### Provide ConfigMap per TEAM for DEV Testing
--------------------------------------------------
+
 -NameSpace: santas-helpers-a-team
 
 [source,shell]
