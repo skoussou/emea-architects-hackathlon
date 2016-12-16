@@ -20,11 +20,11 @@ Pre-requisites
 * You will probably need a repository on github/gitlab for your application between the team
 
 ### The services
-* proxy-api : starts the calls to other services and orchestrates the calls
-* alabaster-snowball : One of the services handling payload and reading ENV Variables (WILDFLY-SWARM)
-* bushy-evergreen : One of the services handling payload and reading ENV Variables (EAP, NODEJS)
-* shinny-upatree : One of the services handling payload and reading ENV Variables (springboot)
-* wunorse-openslae : A copy of the alabaster-snowball
+* [proxy-api](proxy-api) : starts the calls to other services and orchestrates the calls
+* [alabaster-snowball](alabaster-snowball) : One of the services handling payload and reading ENV Variables (WILDFLY-SWARM)
+* [bushy-evergreen](bushy-evergreen) : One of the services handling payload and reading ENV Variables (EAP, NODEJS)
+* [shinny-upatree](shinny-upatree) : One of the services handling payload and reading ENV Variables (springboot)
+* [wunorse-openslae](wunorse-openslae) : A copy of the alabaster-snowball
 
 ## Setting Up the Hackathlon Environment
 
