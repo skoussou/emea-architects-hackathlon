@@ -63,7 +63,7 @@ oc create configmap santas-config \
      --from-literal=environment=PROD
 ----
 
-### Provide ConfigMap per TEAM for DEV Testing
+### Provide ConfigMap per TEAM 
 
 -NameSpace: santas-helpers-a-team
 
@@ -106,7 +106,7 @@ oc create configmap santas-config \
 ----
 
 -NameSpace: santas-helpers-e-team
------
+
 [source,shell]
 ----
 oc create configmap santas-config \   
